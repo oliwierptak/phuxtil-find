@@ -1,0 +1,25 @@
+{
+    "name": "phuxtil/find",
+    "description": "Easy interface for output of 'find' unix command",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^7",
+        "phuxtil/chmod": "@dev"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^3",
+        "phpunit/phpunit": "^6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Phuxtil\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhuxtilTests\\Functional\\": "tests/Functional"
+        }
+    }
+}
