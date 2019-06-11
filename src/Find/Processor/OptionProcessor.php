@@ -4,6 +4,7 @@ namespace Phuxtil\Find\Processor;
 
 use Phuxtil\Chmod\ChmodFacade;
 use Phuxtil\Find\Output\Column;
+use Phuxtil\SplFileInfo\VirtualSplFileInfo;
 
 class OptionProcessor
 {
@@ -103,35 +104,35 @@ class OptionProcessor
     {
         $result = [];
         for ($a = 0; $a < count($data); $a++) {
-            $item = $data[$a];
+            $itemData = $data[$a];
 
-            $item['path'] = \pathinfo($item['filepath'], \PATHINFO_DIRNAME);
-            $item['basename'] = \pathinfo($item['filepath'], \PATHINFO_BASENAME);
-            $item['extension'] = \pathinfo($item['filepath'], \PATHINFO_EXTENSION);
-            $item['realPath'] = $item['filepath'];
+            $itemData['path'] = \pathinfo($itemData['filepath'], \PATHINFO_DIRNAME);
+            $itemData['basename'] = \pathinfo($itemData['filepath'], \PATHINFO_BASENAME);
+            $itemData['extension'] = \pathinfo($itemData['filepath'], \PATHINFO_EXTENSION);
+            $itemData['realPath'] = $itemData['filepath'];
 
-            $item['aTime'] = $item['date_access'];
-            $item['mTime'] = $item['date_modify'];
-            $item['cTime'] = $item['date_change'];
+            $itemData['aTime'] = $itemData['date_access'];
+            $itemData['mTime'] = $itemData['date_modify'];
+            $itemData['cTime'] = $itemData['date_change'];
 
-            $item['file'] = $item['type'] === static::TYPE_FILE;
-            $item['dir'] = $item['type'] === static::TYPE_DIR;
-            $item['link'] = $item['type'] === static::TYPE_LINK;
+            $itemData['file'] = $itemData['type'] === static::TYPE_FILE;
+            $itemData['dir'] = $itemData['type'] === static::TYPE_DIR;
+            $itemData['link'] = $itemData['type'] === static::TYPE_LINK;
 
             $chmodFacade = new ChmodFacade();
-            $item['readable'] = $chmodFacade->validateByOctal($item['permissions'], 'u', 'r');
-            $item['writable'] = $chmodFacade->validateByOctal($item['permissions'], 'u', 'w');
-            $item['executable'] = $chmodFacade->validateByOctal($item['permissions'], 'u', 'x');
-            $item['acl'] = $chmodFacade->toArray($item['permissions']);
+            $perms = $itemData['permissions'];
+            $itemData['perms'] = $perms;
+            $itemData['readable'] = $chmodFacade->validateByOctal($perms, 'u', 'r');
+            $itemData['writable'] = $chmodFacade->validateByOctal($perms, 'u', 'w');
+            $itemData['executable'] = $chmodFacade->validateByOctal($perms, 'u', 'x');
+            $itemData['owner'] = $itemData['uid'];
+            $itemData['group'] = $itemData['gid'];
+            $itemData['type'] = $this->typeToSplFileType($itemData['type']);
 
-            $item['type'] = $this->typeToSplFileType($item['type']);
+            $virtualSplFileInfo = (new VirtualSplFileInfo($itemData['filepath']))
+                ->fromArray($itemData);
 
-            unset($item['date_time']);
-            unset($item['date_access']);
-            unset($item['date_modify']);
-            unset($item['date_change']);
-
-            $result[] = $item;
+            $result[] = $virtualSplFileInfo;
         }
 
         return $result;

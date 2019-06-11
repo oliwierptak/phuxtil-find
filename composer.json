@@ -6,7 +6,8 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^7",
-        "phuxtil/chmod": "@dev"
+        "phuxtil/chmod": "@dev",
+        "phuxtil/splfileinfo": "@dev"
     },
     "require-dev": {
         "symfony/var-dumper": "^3",

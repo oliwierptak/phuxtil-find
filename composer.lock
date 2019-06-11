@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37600fb7c694de7d289654bd79d1ed77",
+    "content-hash": "f91fbc532661dbac06ba2ebe763a5a19",
     "packages": [
         {
             "name": "phuxtil/chmod",
@@ -39,6 +39,40 @@
             ],
             "description": "Library to validate symbolic and octal modes used by unix chmod program",
             "time": "2019-06-11T19:41:59+00:00"
+        },
+        {
+            "name": "phuxtil/splfileinfo",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oliwierptak/phuxtil-splfileinfo.git",
+                "reference": "f02a6c7d1bb43e45d260622dd1ddac12044f8e6b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oliwierptak/phuxtil-splfileinfo/zipball/f02a6c7d1bb43e45d260622dd1ddac12044f8e6b",
+                "reference": "f02a6c7d1bb43e45d260622dd1ddac12044f8e6b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6",
+                "symfony/var-dumper": "^3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phuxtil\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "SplFileInfo extension that allows to work with virtual (non existing) files",
+            "time": "2019-06-11T22:27:45+00:00"
         }
     ],
     "packages-dev": [
@@ -1691,7 +1725,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "phuxtil/chmod": 20
+        "phuxtil/chmod": 20,
+        "phuxtil/splfileinfo": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
