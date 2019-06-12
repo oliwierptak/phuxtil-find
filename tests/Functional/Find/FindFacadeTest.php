@@ -22,9 +22,9 @@ class FindFacadeTest extends TestCase
     public function test_process()
     {
         $input = \file_get_contents(static::FIND_OUTPUT);
-        $optionProcessor = $this->factory->createFormatOptionProcessor();
+        $processor = $this->factory->createFormatOptionProcessor();
 
-        $output = $optionProcessor->process($input);
+        $output = $processor->process($input);
 
         $this->assertDirectoryOutput($output[0]);
         $this->assertLinkOutput($output[1]);
