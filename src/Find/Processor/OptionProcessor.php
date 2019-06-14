@@ -120,7 +120,7 @@ class OptionProcessor
     protected function typeToSplFileType(string $type): string
     {
         $mappings = [
-            DefinesInterface::TYPE_DIR => 'directory',
+            DefinesInterface::TYPE_DIR => 'dir',
             DefinesInterface::TYPE_FILE => 'file',
             DefinesInterface::TYPE_LINK => 'link',
         ];
