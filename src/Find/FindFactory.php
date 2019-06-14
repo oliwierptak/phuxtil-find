@@ -2,33 +2,17 @@
 
 namespace Phuxtil\Find;
 
+use Phuxtil\Chmod\ChmodFacade;
 use Phuxtil\Find\FormatOption\FormatOptionContainer;
 use Phuxtil\Find\Processor\OptionProcessor;
 
 class FindFactory
 {
-    /**
-     * "%TY-%Tm-%Td %TH:%TM:%.7TS %Tz|%As|%Cs|%Ts|%#m|%u|%g|%U|%G|%y|%i|%b|%s|%n|%f|%p\n"
-     *
-     * @param string $format
-     * @param string $delimiter
-     *
-     * @return \Phuxtil\Find\Processor\OptionProcessor
-     */
-    public function createFormatOptionProcessor(string $format = '', string $delimiter = '|'): OptionProcessor
+    public function createFormatOptionProcessor(): OptionProcessor
     {
-        if (trim($format) === '') {
-            $format = "%TY-%Tm-%Td %TH:%TM:%.7TS %Tz|%As|%Cs|%Ts|%#m|%u|%g|%U|%G|%y|%i|%b|%s|%n|%f|%p\n";
-        }
-
-        if (trim($delimiter) === '') {
-            $delimiter = '|';
-        }
-
         return new OptionProcessor(
-            $format,
-            $this->createOptionCollection(),
-            $delimiter
+            $this->createChmodFacade(),
+            $this->createOptionCollection()
         );
     }
 
@@ -51,5 +35,10 @@ class FindFactory
     protected function createOptionContainer(): FormatOptionContainer
     {
         return new FormatOptionContainer();
+    }
+
+    protected function createChmodFacade()
+    {
+        return new ChmodFacade();
     }
 }

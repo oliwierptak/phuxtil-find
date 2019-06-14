@@ -3,56 +3,36 @@
 namespace Phuxtil\Find\Processor;
 
 use Phuxtil\Chmod\ChmodFacade;
+use Phuxtil\Find\DefinesInterface;
+use Phuxtil\Find\FindConfigurator;
 use Phuxtil\Find\Output\Column;
 use Phuxtil\SplFileInfo\VirtualSplFileInfo;
 
 class OptionProcessor
 {
-    const TYPE_FILE = 'f';
-    const TYPE_DIR = 'd';
-    const TYPE_LINK = 'l';
+    /**
+     * @var ChmodFacade
+     */
+    protected $chmodFacade;
 
     /**
      * @var \Phuxtil\Find\FormatOption\FormatOptionInterface[]
      */
-    protected $options;
+    protected $options = [];
 
-    /**
-     * @var string
-     */
-    protected $format;
-
-    /**
-     * @var string
-     */
-    protected $delimiter;
-
-    /**
-     * @param string $format
-     * @param \Phuxtil\Find\FormatOption\FormatOptionInterface[] $options
-     * @param string $delimiter
-     */
-    public function __construct(string $format, array $options, string $delimiter)
+    public function __construct(ChmodFacade $chmodFacade, array $options)
     {
+        $this->chmodFacade = $chmodFacade;
         $this->options = $options;
-        $this->format = $format;
-        $this->delimiter = $delimiter;
     }
 
-    /**
-     * '%TY-%Tm-%Td %TH:%TM:%.7TS %Tz|%As|%Cs|%Ts|%#m|%u|%g|%U|%G|%y|%i|%b|%s|%n|%f|%p'\n
-     *
-     * @param string $input
-     *
-     * @return mixed
-     */
-    public function process(string $input): array
+    public function process(FindConfigurator $configurator): array
     {
-        $definedOptions = \explode($this->delimiter, trim($this->format));
+        $definedOptions = \explode($configurator->getFormatDelimiter(), trim($configurator->getFormat()));
         $columns = $this->processColumns($definedOptions);
 
-        $lines = \explode(\PHP_EOL, trim($input));
-        $result = $this->processLines($columns, $lines);
+        $lines = \explode($configurator->getLineDelimiter(), trim($configurator->getFindOutput()));
+        $result = $this->processLines($columns, $lines, $configurator->getFormatDelimiter());
         $result = $this->toSplFileInfoFormat($result);
 
         return $result;
@@ -83,11 +63,11 @@ class OptionProcessor
         return $result;
     }
 
-    protected function processLines(array $columns, array $lines): array
+    protected function processLines(array $columns, array $lines, string $delimiter): array
     {
         $result = [];
         for ($lineNumber = 0; $lineNumber < count($lines); $lineNumber++) {
-            $values = \explode($this->delimiter, trim($lines[$lineNumber]));
+            $values = \explode($delimiter, trim($lines[$lineNumber]));
 
             $item = \array_combine(
                 \array_keys($columns),
@@ -115,16 +95,15 @@ class OptionProcessor
             $itemData['mTime'] = $itemData['date_modify'];
             $itemData['cTime'] = $itemData['date_change'];
 
-            $itemData['file'] = $itemData['type'] === static::TYPE_FILE;
-            $itemData['dir'] = $itemData['type'] === static::TYPE_DIR;
-            $itemData['link'] = $itemData['type'] === static::TYPE_LINK;
+            $itemData['file'] = $itemData['type'] === DefinesInterface::TYPE_FILE;
+            $itemData['dir'] = $itemData['type'] === DefinesInterface::TYPE_DIR;
+            $itemData['link'] = $itemData['type'] === DefinesInterface::TYPE_LINK;
 
-            $chmodFacade = new ChmodFacade();
             $perms = $itemData['permissions'];
             $itemData['perms'] = $perms;
-            $itemData['readable'] = $chmodFacade->validateByOctal($perms, 'u', 'r');
-            $itemData['writable'] = $chmodFacade->validateByOctal($perms, 'u', 'w');
-            $itemData['executable'] = $chmodFacade->validateByOctal($perms, 'u', 'x');
+            $itemData['readable'] = $this->chmodFacade->isReadable($perms);
+            $itemData['writable'] = $this->chmodFacade->isWritable($perms);
+            $itemData['executable'] = $this->chmodFacade->isExecutable($perms);
             $itemData['owner'] = $itemData['uid'];
             $itemData['group'] = $itemData['gid'];
             $itemData['type'] = $this->typeToSplFileType($itemData['type']);
@@ -141,9 +120,9 @@ class OptionProcessor
     protected function typeToSplFileType(string $type): string
     {
         $mappings = [
-            static::TYPE_DIR => 'directory',
-            static::TYPE_FILE => 'file',
-            static::TYPE_LINK => 'link',
+            DefinesInterface::TYPE_DIR => 'directory',
+            DefinesInterface::TYPE_FILE => 'file',
+            DefinesInterface::TYPE_LINK => 'link',
         ];
 
         return $mappings[$type] ?? 'unknown';

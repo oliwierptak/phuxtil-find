@@ -2,7 +2,7 @@
 
 namespace Phuxtil\Find;
 
-class FindFacade
+class FindFacade implements FindFacadeInterface
 {
     /**
      * @var \Phuxtil\Find\FindFacade
@@ -24,16 +24,19 @@ class FindFacade
     }
 
     /**
-     * '%TY-%Tm-%Td %TH:%TM:%.7TS %Tz|%As|%Cs|%Ts|%#m|%u|%g|%U|%G|%y|%i|%b|%s|%n|%f|%p'\n
-     *
-     * @param string $input
+     * @param \Phuxtil\Find\FindConfigurator $configurator
      *
      * @return mixed
      */
-    public function process(string $input): array
+    public function process(FindConfigurator $configurator): array
     {
         return $this->getFactory()
             ->createFormatOptionProcessor()
-            ->process($input);
+            ->process($configurator);
+    }
+
+    public function getDefaultFormat(): string
+    {
+        return DefinesInterface::DEFAULT_FORMAT;
     }
 }
