@@ -46,7 +46,7 @@ class FindFacadeTest extends TestCase
         $this->assertEquals('0755', $info->getPerms());
         $this->assertEquals(0, $info->getOwner());
         $this->assertEquals(0, $info->getGroup());
-        $this->assertEquals('directory', $info->getType());
+        $this->assertEquals('dir', $info->getType());
         $this->assertEquals(9979987, $info->getInode());
         $this->assertEquals(128, $info->getSize());
         $this->assertEquals('remote_fs', $info->getFilename());
