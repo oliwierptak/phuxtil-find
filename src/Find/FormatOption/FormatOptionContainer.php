@@ -6,7 +6,6 @@ use Phuxtil\Find\FormatOption\Type\Blocks;
 use Phuxtil\Find\FormatOption\Type\DateAccess;
 use Phuxtil\Find\FormatOption\Type\DateChange;
 use Phuxtil\Find\FormatOption\Type\DateModify;
-use Phuxtil\Find\FormatOption\Type\DateTime;
 use Phuxtil\Find\FormatOption\Type\Filename;
 use Phuxtil\Find\FormatOption\Type\Filepath;
 use Phuxtil\Find\FormatOption\Type\Gid;
@@ -26,7 +25,6 @@ class FormatOptionContainer
         DateAccess::class,
         DateModify::class,
         DateChange::class,
-        DateTime::class,
         Filename::class,
         Filepath::class,
         Gid::class,
