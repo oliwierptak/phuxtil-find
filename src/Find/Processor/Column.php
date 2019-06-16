@@ -1,6 +1,6 @@
 <?php
 
-namespace Phuxtil\Find\Output;
+namespace Phuxtil\Find\Processor;
 
 use Phuxtil\Find\FormatOption\FormatOptionInterface;
 

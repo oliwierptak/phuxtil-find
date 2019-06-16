@@ -9,7 +9,7 @@ class Inode extends AbstractOption
     /**
      * 9979987
      *
-     * @var int
+     * @var string
      */
     protected $format = '%i';
 }

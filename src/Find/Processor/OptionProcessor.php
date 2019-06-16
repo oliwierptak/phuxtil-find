@@ -5,7 +5,6 @@ namespace Phuxtil\Find\Processor;
 use Phuxtil\Chmod\ChmodFacade;
 use Phuxtil\Find\DefinesInterface;
 use Phuxtil\Find\FindConfigurator;
-use Phuxtil\Find\Output\Column;
 use Phuxtil\SplFileInfo\VirtualSplFileInfo;
 
 class OptionProcessor
@@ -26,6 +25,11 @@ class OptionProcessor
         $this->options = $options;
     }
 
+    /**
+     * @param \Phuxtil\Find\FindConfigurator $configurator
+     *
+     * @return \Phuxtil\SplFileInfo\VirtualSplFileInfo[]
+     */
     public function process(FindConfigurator $configurator): array
     {
         $definedOptions = \explode($configurator->getFormatDelimiter(), trim($configurator->getFormat()));
@@ -33,21 +37,24 @@ class OptionProcessor
 
         $output = rtrim(trim($configurator->getFindOutput()), $configurator->getLineDelimiter());
         $lines = \explode($configurator->getLineDelimiter(), $output);
+
         $result = $this->processLines($columns, $lines, $configurator->getFormatDelimiter());
         $result = $this->toSplFileInfoFormat($result);
 
         return $result;
     }
 
+    /**
+     * @param array $definedOptions
+     *
+     * @return array
+     */
     protected function processColumns(array $definedOptions): array
     {
         $result = [];
 
         for ($columnNumber = 0; $columnNumber < count($definedOptions); $columnNumber++) {
             foreach ($this->options as $type => $formatOption) {
-                /**
-                 * @var \Phuxtil\Find\FormatOption\FormatOptionInterface $formatOption
-                 */
                 if ($definedOptions[$columnNumber] !== $formatOption->getFormat()
                     || $formatOption->getType() !== $type) {
                     continue;
@@ -81,6 +88,11 @@ class OptionProcessor
         return $result;
     }
 
+    /**
+     * @param VirtualSplFileInfo[] $data
+     *
+     * @return array
+     */
     protected function toSplFileInfoFormat(array $data): array
     {
         $result = [];
@@ -109,10 +121,8 @@ class OptionProcessor
             $itemData['group'] = $itemData['gid'];
             $itemData['type'] = $this->typeToSplFileType($itemData['type']);
 
-            $virtualSplFileInfo = (new VirtualSplFileInfo($itemData['filepath']))
+            $result[] = (new VirtualSplFileInfo($itemData['filepath']))
                 ->fromArray($itemData);
-
-            $result[] = $virtualSplFileInfo->toArray();
         }
 
         return $result;

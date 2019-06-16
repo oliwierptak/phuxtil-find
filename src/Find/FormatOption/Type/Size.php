@@ -9,7 +9,7 @@ class Size extends AbstractOption
     /**
      * 20
      *
-     * @var int
+     * @var string
      */
     protected $format = '%s';
 }

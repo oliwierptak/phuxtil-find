@@ -26,10 +26,6 @@ class FindConfigurator
 
     public function getFormat(): string
     {
-        if ($this->format === '') {
-            $this->format = DefinesInterface::DEFAULT_FORMAT;
-        }
-
         return $this->format;
     }
 
@@ -42,10 +38,6 @@ class FindConfigurator
 
     public function getFormatDelimiter(): string
     {
-        if ($this->formatDelimiter === '') {
-            $this->formatDelimiter = DefinesInterface::DEFAULT_FORMAT_DELIMITER;
-        }
-
         return $this->formatDelimiter;
     }
 
@@ -58,10 +50,6 @@ class FindConfigurator
 
     public function getLineDelimiter(): string
     {
-        if ($this->lineDelimiter === '') {
-            $this->lineDelimiter = DefinesInterface::DEFAULT_LINE_DELIMITER;
-        }
-
         return $this->lineDelimiter;
     }
 

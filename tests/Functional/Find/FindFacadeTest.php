@@ -3,50 +3,39 @@
 namespace PhuxtilTests\Functional\Find;
 
 use PHPUnit\Framework\TestCase;
+use Phuxtil\Find\DefinesInterface;
 use Phuxtil\Find\FindConfigurator;
-use Phuxtil\Find\FindFactory;
-use Phuxtil\SplFileInfo\VirtualSplFileInfo;
+use Phuxtil\Find\FindFacade;
 
 class FindFacadeTest extends TestCase
 {
-    const FIND_OUTPUT = \TESTS_FIXTURE_DIR . 'list.txt';
+    const FIND_OUTPUT = \TESTS_FIXTURE_DIR . 'find_output.txt';
 
     /**
      * @var \Phuxtil\Find\FindConfigurator
      */
     protected $configurator;
 
-    /**
-     * @var \Phuxtil\Find\FindFactory
-     */
-    protected $factory;
-
     protected function setUp()
     {
-        $this->configurator = (new FindConfigurator())
-            ->setLineDelimiter("\n");
+        $output = \file_get_contents(static::FIND_OUTPUT);
 
-        $this->factory = new FindFactory();
+        $this->configurator = (new FindConfigurator())
+            ->setFormat(DefinesInterface::DEFAULT_FORMAT)
+            ->setFormatDelimiter(DefinesInterface::DEFAULT_FORMAT_DELIMITER)
+            ->setLineDelimiter("\n")
+            ->setFindOutput($output);
     }
 
     public function test_process()
     {
-        $output = \file_get_contents(static::FIND_OUTPUT);
-        $this->configurator->setFindOutput($output);
-        $processor = $this->factory->createFormatOptionProcessor();
+        $facade = new FindFacade();
 
-        $output = $processor->process($this->configurator);
+        $output = $facade->process($this->configurator);
 
-        $dir = (new VirtualSplFileInfo($output[0]['pathname']))
-            ->fromArray($output[0]);
-        $file = (new VirtualSplFileInfo($output[1]['pathname']))
-            ->fromArray($output[1]);
-        $linkResolvedToFile = (new VirtualSplFileInfo($output[2]['pathname']))
-            ->fromArray($output[2]);
-
-        $this->assertDirectoryOutput($dir);
-        $this->assertFileOutput($file);
-        $this->assertLinkResolvedFileOutput($linkResolvedToFile);
+        $this->assertDirectoryOutput($output[0]);
+        $this->assertFileOutput($output[1]);
+        $this->assertLinkResolvedFileOutput($output[2]);
     }
 
     protected function assertDirectoryOutput(\SplFileInfo $info)

@@ -5,7 +5,7 @@ namespace Phuxtil\Find;
 class FindFacade implements FindFacadeInterface
 {
     /**
-     * @var \Phuxtil\Find\FindFacade
+     * @var \Phuxtil\Find\FindFactory
      */
     protected $factory;
 
@@ -26,17 +26,12 @@ class FindFacade implements FindFacadeInterface
     /**
      * @param \Phuxtil\Find\FindConfigurator $configurator
      *
-     * @return mixed
+     * @return array
      */
     public function process(FindConfigurator $configurator): array
     {
         return $this->getFactory()
             ->createFormatOptionProcessor()
             ->process($configurator);
-    }
-
-    public function getDefaultFormat(): string
-    {
-        return DefinesInterface::DEFAULT_FORMAT;
     }
 }

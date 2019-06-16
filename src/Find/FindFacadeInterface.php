@@ -9,9 +9,7 @@ interface FindFacadeInterface
     /**
      * @param \Phuxtil\Find\FindConfigurator $configurator
      *
-     * @return mixed
+     * @return array
      */
     public function process(FindConfigurator $configurator): array;
-
-    public function getDefaultFormat(): string;
 }
