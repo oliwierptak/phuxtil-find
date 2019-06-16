@@ -1,6 +1,6 @@
 # phuxtil-find
 
-Easy interface for output of 'find' unix command
+Easy interface for output of `find` unix command
 
 
 > In Unix-like and some other operating systems, find is a command-line utility that searches one or more directory trees of a file system, locates files based on some user-specified criteria and applies a user-specified action on each matched file.
@@ -35,7 +35,8 @@ $configurator = (new FindConfigurator())
 ```
  
 
-#### Facade
+##### Facade
+
 ```php
 $results = (new FindFacade())->process($configurator);
 ```
