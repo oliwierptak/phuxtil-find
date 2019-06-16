@@ -31,11 +31,11 @@ class FindFacadeTest extends TestCase
     {
         $facade = new FindFacade();
 
-        $output = $facade->process($this->configurator);
+        $results = $facade->process($this->configurator);
 
-        $this->assertDirectoryOutput($output[0]);
-        $this->assertFileOutput($output[1]);
-        $this->assertLinkResolvedFileOutput($output[2]);
+        $this->assertDirectoryOutput($results[0]);
+        $this->assertFileOutput($results[1]);
+        $this->assertLinkResolvedFileOutput($results[2]);
     }
 
     protected function assertDirectoryOutput(\SplFileInfo $info)

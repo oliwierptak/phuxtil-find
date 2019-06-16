@@ -100,7 +100,7 @@ class OptionProcessor
             $itemData = $data[$a];
 
             $itemData['path'] = \pathinfo($itemData['filepath'], \PATHINFO_DIRNAME);
-            $itemData['basename'] = \pathinfo($itemData['filepath'], \PATHINFO_BASENAME);
+            $itemData['basename'] = $itemData['filename'];
             $itemData['extension'] = \pathinfo($itemData['filepath'], \PATHINFO_EXTENSION);
             $itemData['realPath'] = $itemData['filepath'];
 
