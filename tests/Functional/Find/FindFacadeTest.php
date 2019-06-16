@@ -5,6 +5,7 @@ namespace PhuxtilTests\Functional\Find;
 use PHPUnit\Framework\TestCase;
 use Phuxtil\Find\FindConfigurator;
 use Phuxtil\Find\FindFactory;
+use Phuxtil\SplFileInfo\VirtualSplFileInfo;
 
 class FindFacadeTest extends TestCase
 {
@@ -36,9 +37,16 @@ class FindFacadeTest extends TestCase
 
         $output = $processor->process($this->configurator);
 
-        $this->assertDirectoryOutput($output[0]);
-        $this->assertLinkOutput($output[1]);
-        $this->assertFileOutput($output[2]);
+        $dir = (new VirtualSplFileInfo($output[0]['pathname']))
+            ->fromArray($output[0]);
+        $file = (new VirtualSplFileInfo($output[1]['pathname']))
+            ->fromArray($output[1]);
+        $linkResolvedToFile = (new VirtualSplFileInfo($output[2]['pathname']))
+            ->fromArray($output[2]);
+
+        $this->assertDirectoryOutput($dir);
+        $this->assertFileOutput($file);
+        $this->assertLinkResolvedFileOutput($linkResolvedToFile);
     }
 
     protected function assertDirectoryOutput(\SplFileInfo $info)
@@ -47,45 +55,21 @@ class FindFacadeTest extends TestCase
         $this->assertEquals(0, $info->getOwner());
         $this->assertEquals(0, $info->getGroup());
         $this->assertEquals('dir', $info->getType());
-        $this->assertEquals(9979987, $info->getInode());
-        $this->assertEquals(128, $info->getSize());
+        $this->assertEquals(10245134, $info->getInode());
+        $this->assertEquals(160, $info->getSize());
         $this->assertEquals('remote_fs', $info->getFilename());
         $this->assertEquals('/tmp/remote_fs', $info->getPathname());
         $this->assertEquals('/tmp', $info->getPath());
         $this->assertEquals('remote_fs', $info->getBasename());
         $this->assertEquals('', $info->getExtension());
         $this->assertEquals('/tmp/remote_fs', $info->getRealPath());
-        $this->assertEquals(1560119039, $info->getATime());
-        $this->assertEquals(1560110696, $info->getMTime());
-        $this->assertEquals(1560110696, $info->getCTime());
+        $this->assertEquals(-1, $info->getLinkTarget());
+        $this->assertEquals(1560682188, $info->getATime());
+        $this->assertEquals(1560682181, $info->getMTime());
+        $this->assertEquals(1560682181, $info->getCTime());
         $this->assertFalse($info->isFile());
         $this->assertTrue($info->isDir());
         $this->assertFalse($info->isLink());
-        $this->assertTrue($info->isReadable());
-        $this->assertTrue($info->isWritable());
-        $this->assertTrue($info->isExecutable());
-    }
-
-    protected function assertLinkOutput(\SplFileInfo $info)
-    {
-        $this->assertEquals('0777', $info->getPerms());
-        $this->assertEquals(0, $info->getOwner());
-        $this->assertEquals(0, $info->getGroup());
-        $this->assertEquals('link', $info->getType());
-        $this->assertEquals(10004910, $info->getInode());
-        $this->assertEquals(8, $info->getSize());
-        $this->assertEquals('foo.txt', $info->getFilename());
-        $this->assertEquals('/tmp/remote_fs/foo.txt', $info->getPathname());
-        $this->assertEquals('/tmp/remote_fs', $info->getPath());
-        $this->assertEquals('foo.txt', $info->getBasename());
-        $this->assertEquals('txt', $info->getExtension());
-        $this->assertEquals(false, $info->getRealPath());
-        $this->assertEquals(1560110696, $info->getATime());
-        $this->assertEquals(1560110696, $info->getMTime());
-        $this->assertEquals(1560110696, $info->getCTime());
-        $this->assertFalse($info->isFile());
-        $this->assertFalse($info->isDir());
-        $this->assertTrue($info->isLink());
         $this->assertTrue($info->isReadable());
         $this->assertTrue($info->isWritable());
         $this->assertTrue($info->isExecutable());
@@ -97,17 +81,44 @@ class FindFacadeTest extends TestCase
         $this->assertEquals(0, $info->getOwner());
         $this->assertEquals(0, $info->getGroup());
         $this->assertEquals('file', $info->getType());
-        $this->assertEquals(10001592, $info->getInode());
-        $this->assertEquals(60, $info->getSize());
+        $this->assertEquals(10269956, $info->getInode());
+        $this->assertEquals(1210, $info->getSize());
         $this->assertEquals('test.txt', $info->getFilename());
         $this->assertEquals('/tmp/remote_fs/test.txt', $info->getPathname());
         $this->assertEquals('/tmp/remote_fs', $info->getPath());
         $this->assertEquals('test.txt', $info->getBasename());
         $this->assertEquals('txt', $info->getExtension());
-        $this->assertEquals(false, $info->getRealPath());
-        $this->assertEquals(1560103169, $info->getATime());
-        $this->assertEquals(1560103177, $info->getMTime());
-        $this->assertEquals(1560103177, $info->getCTime());
+        $this->assertEquals('/tmp/remote_fs/test.txt', $info->getRealPath());
+        $this->assertEquals(-1, $info->getLinkTarget());
+        $this->assertEquals(1560682162, $info->getATime());
+        $this->assertEquals(1560682181, $info->getMTime());
+        $this->assertEquals(1560682181, $info->getCTime());
+        $this->assertTrue($info->isFile());
+        $this->assertFalse($info->isDir());
+        $this->assertFalse($info->isLink());
+        $this->assertTrue($info->isReadable());
+        $this->assertTrue($info->isWritable());
+        $this->assertFalse($info->isExecutable());
+    }
+
+    protected function assertLinkResolvedFileOutput(\SplFileInfo $info)
+    {
+        $this->assertEquals('0644', $info->getPerms());
+        $this->assertEquals(0, $info->getOwner());
+        $this->assertEquals(0, $info->getGroup());
+        $this->assertEquals('file', $info->getType());
+        $this->assertEquals(10269956, $info->getInode());
+        $this->assertEquals(1210, $info->getSize());
+        $this->assertEquals('test_link.txt', $info->getFilename());
+        $this->assertEquals('/tmp/remote_fs/test_link.txt', $info->getPathname());
+        $this->assertEquals('/tmp/remote_fs', $info->getPath());
+        $this->assertEquals('test_link.txt', $info->getBasename());
+        $this->assertEquals('txt', $info->getExtension());
+        $this->assertEquals('/tmp/remote_fs/test_link.txt', $info->getRealPath());
+        $this->assertEquals(-1, $info->getLinkTarget());
+        $this->assertEquals(1560682162, $info->getATime());
+        $this->assertEquals(1560682181, $info->getMTime());
+        $this->assertEquals(1560682181, $info->getCTime());
         $this->assertTrue($info->isFile());
         $this->assertFalse($info->isDir());
         $this->assertFalse($info->isLink());

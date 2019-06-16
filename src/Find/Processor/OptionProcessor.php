@@ -31,7 +31,8 @@ class OptionProcessor
         $definedOptions = \explode($configurator->getFormatDelimiter(), trim($configurator->getFormat()));
         $columns = $this->processColumns($definedOptions);
 
-        $lines = \explode($configurator->getLineDelimiter(), trim($configurator->getFindOutput()));
+        $output = rtrim(trim($configurator->getFindOutput()), $configurator->getLineDelimiter());
+        $lines = \explode($configurator->getLineDelimiter(), $output);
         $result = $this->processLines($columns, $lines, $configurator->getFormatDelimiter());
         $result = $this->toSplFileInfoFormat($result);
 
@@ -111,7 +112,7 @@ class OptionProcessor
             $virtualSplFileInfo = (new VirtualSplFileInfo($itemData['filepath']))
                 ->fromArray($itemData);
 
-            $result[] = $virtualSplFileInfo;
+            $result[] = $virtualSplFileInfo->toArray();
         }
 
         return $result;
