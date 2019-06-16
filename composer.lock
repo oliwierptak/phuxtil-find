@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f91fbc532661dbac06ba2ebe763a5a19",
+    "content-hash": "91faa27276ad9fcca130bc39e67af514",
     "packages": [
         {
             "name": "phuxtil/chmod",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oliwierptak/phuxtil-chmod.git",
-                "reference": "0e1d91cab2c1d535cb47e200c9b5868ea77106ad"
+                "reference": "995d36df065e188ad6dd176343581f3595047716"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oliwierptak/phuxtil-chmod/zipball/0e1d91cab2c1d535cb47e200c9b5868ea77106ad",
-                "reference": "0e1d91cab2c1d535cb47e200c9b5868ea77106ad",
+                "url": "https://api.github.com/repos/oliwierptak/phuxtil-chmod/zipball/995d36df065e188ad6dd176343581f3595047716",
+                "reference": "995d36df065e188ad6dd176343581f3595047716",
                 "shasum": ""
             },
             "require": {
@@ -38,20 +38,20 @@
                 "MIT"
             ],
             "description": "Library to validate symbolic and octal modes used by unix chmod program",
-            "time": "2019-06-14T18:19:56+00:00"
+            "time": "2019-06-16T09:54:05+00:00"
         },
         {
             "name": "phuxtil/splfileinfo",
-            "version": "dev-master",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oliwierptak/phuxtil-splfileinfo.git",
-                "reference": "4f61dade55dcc97fa1bbd035c8960e5265c8e7e9"
+                "reference": "7da29e078490414993aa1ed1377616c62a883560"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oliwierptak/phuxtil-splfileinfo/zipball/4f61dade55dcc97fa1bbd035c8960e5265c8e7e9",
-                "reference": "4f61dade55dcc97fa1bbd035c8960e5265c8e7e9",
+                "url": "https://api.github.com/repos/oliwierptak/phuxtil-splfileinfo/zipball/7da29e078490414993aa1ed1377616c62a883560",
+                "reference": "7da29e078490414993aa1ed1377616c62a883560",
                 "shasum": ""
             },
             "require": {
@@ -71,8 +71,8 @@
             "license": [
                 "MIT"
             ],
-            "description": "SplFileInfo extension that allows to work with virtual (non existing) files",
-            "time": "2019-06-13T06:08:50+00:00"
+            "description": "SplFileInfo compatible implementation that allows to work with virtual (non existing) files",
+            "time": "2019-06-16T10:18:14+00:00"
         }
     ],
     "packages-dev": [
@@ -1724,10 +1724,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "phuxtil/chmod": 20,
-        "phuxtil/splfileinfo": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
