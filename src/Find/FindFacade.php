@@ -23,11 +23,6 @@ class FindFacade implements FindFacadeInterface
         $this->factory = $factory;
     }
 
-    /**
-     * @param \Phuxtil\Find\FindConfigurator $configurator
-     *
-     * @return array
-     */
     public function process(FindConfigurator $configurator): array
     {
         return $this->getFactory()

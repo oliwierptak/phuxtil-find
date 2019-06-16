@@ -89,9 +89,9 @@ class OptionProcessor
     }
 
     /**
-     * @param VirtualSplFileInfo[] $data
+     * @param array $data
      *
-     * @return array
+     * @return \Phuxtil\SplFileInfo\VirtualSplFileInfo[]
      */
     protected function toSplFileInfoFormat(array $data): array
     {

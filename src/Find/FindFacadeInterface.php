@@ -9,7 +9,7 @@ interface FindFacadeInterface
     /**
      * @param \Phuxtil\Find\FindConfigurator $configurator
      *
-     * @return array
+     * @return \Phuxtil\SplFileInfo\VirtualSplFileInfo[]
      */
     public function process(FindConfigurator $configurator): array;
 }
