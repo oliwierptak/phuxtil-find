@@ -3,15 +3,16 @@
     "description": "Easy interface for output of 'find' unix command",
     "type": "library",
     "license": "MIT",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
-        "php": "^7",
-        "phuxtil/chmod": "^1",
-        "phuxtil/splfileinfo": "^1"
+        "php": "^7.2",
+        "phuxtil/chmod": "dev-php-7-2",
+        "phuxtil/splfileinfo": "dev-php-7-2"
     },
     "require-dev": {
-        "symfony/var-dumper": "^3",
-        "phpunit/phpunit": "^6"
+        "symfony/var-dumper": "^4",
+        "phpunit/phpunit": "^8"
     },
     "autoload": {
         "psr-4": {

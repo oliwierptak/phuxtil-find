@@ -11,6 +11,8 @@ Easy interface for output of `find` unix command
 composer require phuxtil/find
 ```
 
+_Note_: Use v1.x for compatibility with PHP v7.0.x
+
 ### Usage
 
 ###### find sample output
