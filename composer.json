@@ -3,7 +3,7 @@
     "description": "Easy interface for output of 'find' unix command",
     "type": "library",
     "license": "MIT",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
         "php": "^7.2",
