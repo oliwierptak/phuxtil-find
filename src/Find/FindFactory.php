@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Phuxtil\Find;
 
 use Phuxtil\Chmod\ChmodFacade;

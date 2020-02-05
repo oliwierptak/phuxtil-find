@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace PhuxtilTests\Functional\Find;
 
 use PHPUnit\Framework\TestCase;
@@ -16,7 +18,7 @@ class FindFacadeTest extends TestCase
      */
     protected $configurator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $output = \file_get_contents(static::FIND_OUTPUT);
 

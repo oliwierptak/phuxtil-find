@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Phuxtil\Find\FormatOption;
 
 use Phuxtil\Find\FormatOption\Type\Blocks;
