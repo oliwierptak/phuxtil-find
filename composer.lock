@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0ea4d48e085ef67a72ce81e0a4e9ccb9",
+    "content-hash": "c55deefb764699efee69e97f77b5c08d",
     "packages": [
         {
             "name": "phuxtil/chmod",
-            "version": "dev-php-7-2",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oliwierptak/phuxtil-chmod.git",
-                "reference": "c072860aed9f3d882726e234f18b88c6890d7ce7"
+                "reference": "9ba964a777b71c80b26ad10d37d15e194775ac5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oliwierptak/phuxtil-chmod/zipball/c072860aed9f3d882726e234f18b88c6890d7ce7",
-                "reference": "c072860aed9f3d882726e234f18b88c6890d7ce7",
+                "url": "https://api.github.com/repos/oliwierptak/phuxtil-chmod/zipball/9ba964a777b71c80b26ad10d37d15e194775ac5b",
+                "reference": "9ba964a777b71c80b26ad10d37d15e194775ac5b",
                 "shasum": ""
             },
             "require": {
@@ -38,11 +38,11 @@
                 "MIT"
             ],
             "description": "Library to validate symbolic and octal modes used by unix chmod program",
-            "time": "2019-12-01T22:57:01+00:00"
+            "time": "2020-02-05T11:33:48+00:00"
         },
         {
             "name": "phuxtil/splfileinfo",
-            "version": "dev-php-7-2",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oliwierptak/phuxtil-splfileinfo.git",
@@ -1784,10 +1784,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "phuxtil/chmod": 20,
-        "phuxtil/splfileinfo": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
