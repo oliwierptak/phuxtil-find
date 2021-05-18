@@ -12,6 +12,7 @@ composer require phuxtil/find
 ```
 
 _Note_: Use v1.x for compatibility with PHP v7.0.x
+_Note_: Use v2.x for compatibility with PHP v7.2+
 
 ### Usage
 
